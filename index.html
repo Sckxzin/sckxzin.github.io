@@ -2,59 +2,92 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Links Financeiras</title>
+  <title>Acesso Bancos</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(135deg, #141e30, #243b55);
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #0f172a;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      color: #fff;
+      color: #e5e7eb;
     }
 
     .container {
       width: 100%;
-      max-width: 360px;
-      padding: 20px;
-      text-align: center;
+      max-width: 420px;
+      background: #020617;
+      padding: 30px 22px;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
     }
 
     h1 {
-      font-size: 24px;
-      margin-bottom: 5px;
+      text-align: center;
+      font-size: 22px;
+      margin-bottom: 6px;
+      color: #f8fafc;
     }
 
     p {
-      font-size: 14px;
+      text-align: center;
+      font-size: 13px;
       opacity: 0.8;
       margin-bottom: 25px;
     }
 
-    a {
-      display: block;
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
       padding: 16px;
-      margin: 12px 0;
-      background: #00ff99;
-      color: #000;
-      font-weight: bold;
-      border-radius: 10px;
+      margin-bottom: 14px;
+      border-radius: 12px;
       text-decoration: none;
-      transition: 0.3s;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      transition: 0.25s;
+      border: 1px solid transparent;
     }
 
-    a:hover {
-      transform: scale(1.05);
-      background: #00cc7a;
+    .btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    .bv {
+      background: #16a34a;
+      color: #020617;
+    }
+
+    .santander {
+      background: #dc2626;
+      color: #fff;
+    }
+
+    .pan {
+      background: #2563eb;
+      color: #fff;
+    }
+
+    .bradesco {
+      background: #b91c1c;
+      color: #fff;
     }
 
     footer {
-      margin-top: 25px;
-      font-size: 12px;
+      margin-top: 20px;
+      text-align: center;
+      font-size: 11px;
       opacity: 0.6;
     }
   </style>
@@ -62,31 +95,35 @@
 
 <body>
   <div class="container">
-    <h1>🔗 Acesso Financeiras</h1>
+    <h1>🔗 ACESSO AOS BANCOS</h1>
     <p>Selecione o sistema desejado</p>
 
-    <a href="https://gpar.bv.com.br/ng-gpar-base-gestao-de-acesso-externo/listagem-usuario" target="_blank">
-      🟢 BANCO BV
+    <a class="btn bv"
+       href="https://gpar.bv.com.br/ng-gpar-base-gestao-de-acesso-externo/listagem-usuario"
+       target="_blank">
+      BANCO BV
     </a>
 
-    <a href="https://veiculos.bancopan.com.br/login" target="_blank">
-      🔵 BANCO PAN
+    <a class="btn santander"
+       href="https://brpioneer.accenture.com/originacao-auto/login"
+       target="_blank">
+      BANCO SANTANDER
     </a>
 
-    <a href="https://brpioneer.accenture.com/originacao-auto/login" target="_blank">
-      🔴 BANCO SANTANDER
+    <a class="btn pan"
+       href="https://veiculos.bancopan.com.br/login"
+       target="_blank">
+      BANCO PAN
     </a>
 
-    <a href="https://wwwsn.bradescofinanciamentos.com.br/finilojmobile/#/login-beta" target="_blank">
-      🔵 BANCO BRADESCO
-    </a>
-
-    <a href="https://gestaoclick.com/login/?_gl=1%2a2e1gq3%2a_gcl_au%2aMTM5MDU4OTExNi4xNzY4NDEyNTU5" target="_blank">
-      🟣 Gestão Click
+    <a class="btn bradesco"
+       href="https://wwwsn.bradescofinanciamentos.com.br/finilojmobile/#/login-beta"
+       target="_blank">
+      BANCO BRADESCO
     </a>
 
     <footer>
-      Uso interno • Acesso rápido
+      Uso interno • Acesso rápido e seguro
     </footer>
   </div>
 </body>
