@@ -2,136 +2,290 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Acesso Bancos</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acesso aos bancos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      box-sizing: border-box;
+    :root {
+      --bg: #eef1f6;
+      --surface: #ffffff;
+      --surface-2: #f5f7fa;
+      --text: #0f172a;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --focus: #2563eb;
+      color-scheme: light;
     }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #070b14;
+        --surface: #0f1522;
+        --surface-2: #161e2e;
+        --text: #f1f5f9;
+        --muted: #8b98ad;
+        --line: #1f2a3d;
+        --focus: #60a5fa;
+        color-scheme: dark;
+      }
+    }
+
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: #0f172a;
       min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #e5e7eb;
+      padding: 32px 16px;
+      padding-top: max(32px, env(safe-area-inset-top));
+      padding-bottom: max(32px, env(safe-area-inset-bottom));
+      display: grid;
+      place-items: center;
+      font-family: "Manrope", "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
     }
 
-    .container {
+    .panel {
       width: 100%;
-      max-width: 420px;
-      background: #020617;
-      padding: 30px 22px;
-      border-radius: 16px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      max-width: 460px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 28px 20px 20px;
+      box-shadow: 0 30px 60px -30px rgba(15, 23, 42, .35);
     }
+
+    header { padding: 0 6px; margin-bottom: 20px; }
 
     h1 {
-      text-align: center;
-      font-size: 22px;
-      margin-bottom: 6px;
-      color: #f8fafc;
+      margin: 0 0 4px;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -.02em;
     }
 
-    p {
-      text-align: center;
-      font-size: 13px;
-      opacity: 0.8;
-      margin-bottom: 25px;
+    header p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--muted);
     }
 
-    .btn {
+    .search {
+      position: relative;
+      margin-bottom: 14px;
+    }
+    .search svg {
+      position: absolute;
+      left: 14px; top: 50%;
+      transform: translateY(-50%);
+      width: 18px; height: 18px;
+      color: var(--muted);
+      pointer-events: none;
+    }
+    .search input {
+      width: 100%;
+      font: inherit;
+      font-size: 15px;
+      padding: 13px 14px 13px 42px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: var(--surface-2);
+      color: var(--text);
+      outline: none;
+      transition: border-color .2s;
+    }
+    .search input:focus { border-color: var(--focus); }
+
+    ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+
+    .bank {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 16px;
-      margin-bottom: 14px;
-      border-radius: 12px;
+      gap: 14px;
+      padding: 10px 12px 10px 10px;
+      border-radius: 14px;
       text-decoration: none;
-      font-weight: 600;
-      letter-spacing: 0.4px;
-      transition: 0.25s;
+      color: inherit;
       border: 1px solid transparent;
+      transition: background .15s, border-color .15s;
     }
+    .bank:hover { background: var(--surface-2); border-color: var(--line); }
+    .bank:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 
-    .btn:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.08);
-    }
-
-    .bv {
-      background: #16a34a;
-      color: #020617;
-    }
-
-    .santander {
-      background: #dc2626;
+    .badge {
+      flex: none;
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 14px;
       color: #fff;
+      background: var(--c);
+      letter-spacing: -.01em;
     }
 
-    .pan {
-      background: #2563eb;
-      color: #fff;
+    .info { flex: 1; min-width: 0; }
+    .name { display: block; font-weight: 700; font-size: 15.5px; }
+    .host {
+      display: block;
+      font-size: 12.5px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    .bradesco {
-      background: #b91c1c;
-      color: #fff;
+    kbd {
+      flex: none;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      min-width: 26px;
+      height: 26px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-bottom-width: 2px;
+      border-radius: 7px;
+    }
+
+    .open-icon {
+      flex: none;
+      width: 18px; height: 18px;
+      color: var(--muted);
+      opacity: 0;
+      transition: opacity .15s, transform .15s;
+    }
+    .bank:hover .open-icon { opacity: 1; transform: translate(2px, -2px); }
+
+    .empty {
+      display: none;
+      text-align: center;
+      font-size: 14px;
+      color: var(--muted);
+      padding: 24px 0;
     }
 
     footer {
-      margin-top: 20px;
-      text-align: center;
-      font-size: 11px;
-      opacity: 0.6;
+      margin-top: 18px;
+      padding: 14px 6px 0;
+      border-top: 1px solid var(--line);
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 420px) {
+      kbd { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <h1>🔗 ACESSO AOS BANCOS</h1>
-    <p>Selecione o sistema desejado</p>
+  <main class="panel">
+    <header>
+      <h1>Acesso aos bancos</h1>
+      <p>Escolha o portal de financiamento para entrar.</p>
+    </header>
 
-    <a class="btn bv"
-       href="https://gpar.bv.com.br/ng-gpar-base-gestao-de-acesso-externo/listagem-usuario"
-       target="_blank">
-      BANCO BV
-    </a>
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Buscar banco" autocomplete="off" aria-label="Buscar banco">
+    </div>
 
-    <a class="btn santander"
-       href="https://brpioneer.accenture.com/originacao-auto/login"
-       target="_blank">
-      BANCO SANTANDER
-    </a>
+    <ul id="list">
+      <li><a class="bank" style="--c:#7c3aed" href="https://motrix.joinbank.com.br/sign-in" target="_blank" rel="noopener">
+        <span class="badge">MX</span>
+        <span class="info"><span class="name">Banco Motrix</span><span class="host">motrix.joinbank.com.br</span></span>
+        <kbd>1</kbd>
+      </a></li>
 
-    <a class="btn pan"
-       href="https://veiculos.bancopan.com.br/login"
-       target="_blank">
-      BANCO PAN
-    </a>
+      <li><a class="bank" style="--c:#ea580c" href="https://auto-bankme.altisapp.com" target="_blank" rel="noopener">
+        <span class="badge">MG</span>
+        <span class="info"><span class="name">Moto da Gente</span><span class="host">auto-bankme.altisapp.com</span></span>
+        <kbd>2</kbd>
+      </a></li>
 
-    <a class="btn bradesco"
-       href="https://wwwsn.bradescofinanciamentos.com.br/finilojmobile/#/login-beta"
-       target="_blank">
-      BANCO BRADESCO
-    </a>
+      <li><a class="bank" style="--c:#0d9488" href="https://app.meucredere.com.br/d/users/sign_in" target="_blank" rel="noopener">
+        <span class="badge">CR</span>
+        <span class="info"><span class="name">Credere</span><span class="host">app.meucredere.com.br</span></span>
+        <kbd>3</kbd>
+      </a></li>
 
-    <a class="btn motrix"
-      href="https://motrix.joinbank.com.br/sign-in"
-      target="_blank">
-     BANCO MOTRIX
-    </a>
-    
+      <li><a class="bank" style="--c:#15803d" href="https://gpar.bv.com.br/ng-gpar-base-gestao-de-acesso-externo/listagem-usuario" target="_blank" rel="noopener">
+        <span class="badge">BV</span>
+        <span class="info"><span class="name">Banco BV</span><span class="host">gpar.bv.com.br</span></span>
+        <kbd>4</kbd>
+      </a></li>
+
+      <li><a class="bank" style="--c:#dc2626" href="https://brpioneer.accenture.com/originacao-auto/login" target="_blank" rel="noopener">
+        <span class="badge">ST</span>
+        <span class="info"><span class="name">Banco Santander</span><span class="host">brpioneer.accenture.com</span></span>
+        <kbd>5</kbd>
+      </a></li>
+
+      <li><a class="bank" style="--c:#2563eb" href="https://veiculos.bancopan.com.br/login" target="_blank" rel="noopener">
+        <span class="badge">PN</span>
+        <span class="info"><span class="name">Banco Pan</span><span class="host">veiculos.bancopan.com.br</span></span>
+        <kbd>6</kbd>
+      </a></li>
+
+      <li><a class="bank" style="--c:#be123c" href="https://wwwsn.bradescofinanciamentos.com.br/finilojmobile/#/login-beta" target="_blank" rel="noopener">
+        <span class="badge">BR</span>
+        <span class="info"><span class="name">Banco Bradesco</span><span class="host">bradescofinanciamentos.com.br</span></span>
+        <kbd>7</kbd>
+      </a></li>
+    </ul>
+
+    <p class="empty" id="empty">Nenhum banco encontrado com esse nome.</p>
 
     <footer>
-      Uso interno • Acesso rápido e seguro
+      <span>Uso interno</span>
+      <span>Atalho: tecle o número do banco</span>
     </footer>
-  </div>
+  </main>
+
+  <script>
+    const q = document.getElementById('q');
+    const items = [...document.querySelectorAll('#list li')];
+    const empty = document.getElementById('empty');
+    const norm = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
+    q.addEventListener('input', () => {
+      const term = norm(q.value.trim());
+      let shown = 0;
+      items.forEach(li => {
+        const match = norm(li.textContent).includes(term);
+        li.style.display = match ? '' : 'none';
+        if (match) shown++;
+      });
+      empty.style.display = shown ? 'none' : 'block';
+    });
+
+    q.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        const first = items.find(li => li.style.display !== 'none');
+        if (first) first.querySelector('a').click();
+      }
+    });
+
+    document.addEventListener('keydown', e => {
+      if (document.activeElement === q || e.ctrlKey || e.metaKey || e.altKey) return;
+      if (e.key === '/') { e.preventDefault(); q.focus(); return; }
+      const n = parseInt(e.key, 10);
+      if (n >= 1 && n <= items.length) items[n - 1].querySelector('a').click();
+    });
+  </script>
 </body>
 </html>
